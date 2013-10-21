@@ -18,10 +18,65 @@ Operations
 
 Draft API operations, based on the system's resources being limited to Ladders, Challenges, and Competitors.
 
-    /ladders [GET,POST]
-    /ladders/<ladder_id> [GET,PUT,DELETE]
-    /challenges [GET,POST]
-    /challenges/<challenge_id> [GET,PUT,DELETE]
-    /competitors [GET,POST]
-    /competitors/<competitor_id> [GET,PUT,DELETE]
+    /ladders                       [GET,POST]
+    /ladders/<ladder_id>           [GET,PUT,DELETE]
+    /challenges                    [GET,POST]
+    /challenges/<challenge_id>     [GET,PUT,DELETE]
+    /competitors                   [GET,POST]
+    /competitors/<competitor_id>   [GET,PUT,DELETE]
+
+Resources
+---------
+
+### Ladder
+
+    {
+        'ladder': {
+            'id': <ladder_id>,
+            'competitors': {
+                <rank> : <simplified_competitor_object>
+            },
+            'settings': {
+                'challenges_can_be_declined': true|false,
+                ...
+            },
+            'created': <date>,
+            'expires': <date>,
+            ...
+        }
+    }
+
+### Challenge
+
+    {
+        'challenge': {
+            'id': <challenge_id>,
+            'ladder': <ladder_id>,
+            'challenger': <simplified_competitor_object>,
+            'challengee': <simplified_competitor_object>,
+            'status': ('pending'|'accepted'|'declined'),
+            'outcome': ('win'|'lose'|'draw'|'forfeit'|'no result'),
+            'expires': <date>,
+            'created': <date>,
+            ...
+        }
+    }
+
+### Competitor
+
+    {
+        'competitor': {
+            'id': <competitor_id>,
+            'ladders': [
+                {
+                    'id': <ladder_id>,
+                    'rank': <ladder_rank>,
+                    'rating': <ladder_rating>,
+                    ...
+                }
+            ],
+            ...
+        }
+    }
+
 
