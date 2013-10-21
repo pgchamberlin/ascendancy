@@ -5,7 +5,7 @@ from flask import Flask, Response
 app = Flask(__name__)
 
 # import and initialize Sommelier
-from ascendancy import Ascendancy
+from ascendancy.core import Ascendancy
 ascendancy = Ascendancy()
 
 @app.route('/')
@@ -29,7 +29,7 @@ def get_ladder(id):
     return Response(response_body, **keyed_args_dict)
 
 @app.route('/ladders/<id>', methods = ['PUT'])
-def get_ladder(id):
+def update_ladder(id):
     response_body, keyed_args_dict = ascendancy.update_ladder(id, request.form)
     return Response(response_body, **keyed_args_dict)
 
@@ -54,7 +54,7 @@ def get_challenge(id):
     return Response(response_body, **keyed_args_dict)
 
 @app.route('/challenges/<id>', methods = ['PUT'])
-def get_challenge(id):
+def update_challenge(id):
     response_body, keyed_args_dict = ascendancy.update_challenge(id, request.form)
     return Response(response_body, **keyed_args_dict)
 
@@ -79,7 +79,7 @@ def get_competitor(id):
     return Response(response_body, **keyed_args_dict)
 
 @app.route('/competitors/<id>', methods = ['PUT'])
-def get_competitor(id):
+def update_competitor(id):
     response_body, keyed_args_dict = ascendancy.update_competitor(id, request.form)
     return Response(response_body, **keyed_args_dict)
 
