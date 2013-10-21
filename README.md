@@ -16,13 +16,12 @@ a challenger wins, or using points-based systems like Elo ratings.
 Operations
 ----------
 
-Draft for API operations
+Draft API operations, based on the system's resources being limited to Ladders, Challenges, and Competitors.
 
-    /ladder [GET]
-    /ladder/new [POST]
-    /ladder/<ladder_id> [GET,PUT,DELETE]
-    /ladder/<ladder_id>/challenge/<challenger>/<challengee> [GET,PUT,POST,DELETE]
-    /competitor [GET]
-    /competitor/new [POST]
-    /competitor/<competitor_id> [GET,PUT,DELETE]
+    /ladders [GET,POST]
+    /ladders/<ladder_id> [GET,PUT,DELETE]
+    /challenges [GET,POST]
+    /challenges/<challenge_id> [GET,PUT,DELETE]
+    /competitors [GET,POST]
+    /competitors/<competitor_id> [GET,PUT,DELETE]
 
