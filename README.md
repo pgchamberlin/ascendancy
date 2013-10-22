@@ -13,6 +13,43 @@ The API should be agnostic to the type of game being played, being concerned onl
 of the tournament. I hope that the API will support a number of different ranking mechanisms such as swapping places when 
 a challenger wins, or using points-based systems like Elo ratings.
 
+Getting started
+---------------
+
+N.B. this project is inchoate, hardly written at all, so don't expect this to do much yet ;-)
+
+Ascendancy is being written using the [Flask framework](http://flask.pocoo.org/ "Flask (A Python Microframework)").
+Assuming you're on a Linux machine, are familiar with Flask and have pip installed, the best way to get 
+started is probably to clone this project, i.e.:
+
+    git clone git@github.com:pgchamberlin/ascendancy.git ascendancy
+
+And then if you don't already have virtualenv installed:
+
+    pip install virtualenv
+    
+Now create a virtualenv on the clone directory:
+
+    virtualenv ascendancy
+    
+Activate the virtualenv:
+
+    . ascendancy/bin/activate
+    
+Navigate to the project's directory:
+
+    cd ascendancy
+    
+Install Flask from pip:
+
+    pip install Flask
+    
+You should now be able to fire up the app on localhost:
+
+    python ascendancy_app.py
+    
+You should be able to find the app at http://127.0.0.1:5000, if not you might need to [consult the Flask docs](http://flask.pocoo.org/docs/installation/#installation "Flask documentation").
+
 Operations
 ----------
 
@@ -78,5 +115,4 @@ Resources
             ...
         }
     }
-
 
