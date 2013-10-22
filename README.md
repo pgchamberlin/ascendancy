@@ -16,7 +16,7 @@ a challenger wins, or using points-based systems like Elo ratings.
 Getting started
 ---------------
 
-N.B. this project is inchoate, hardly written at all, so don't expect this to do much yet ;-)
+**N.B. this project is inchoate, hardly written at all, so don't expect this to do much yet ;-)**
 
 Ascendancy is being written using the [Flask framework](http://flask.pocoo.org/ "Flask (A Python Microframework)").
 Assuming you're on a Linux machine, are familiar with Flask and have pip installed, the best way to get 
