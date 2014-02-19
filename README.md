@@ -1,17 +1,16 @@
 Ascendancy
 ==========
 
-A ladder tournament API
+A chess club API
 -----------------------
 
-In case you're unsure what a ladder tournament is [here's a link to Wikipedia](http://en.wikipedia.org/wiki/Ladder_tournament "Ladder Tournament - Wikipedia").
+The original idea for this project was to develop a simple API for creating and conducting 
+[ladder tournaments](http://en.wikipedia.org/wiki/Ladder_tournament "Ladder Tournament - Wikipedia"), but in the
+meantime the chess club I play at needs a new website backend, so it's getting repurposed.
 
-The idea of this project is to develop a simple API for creating and conducting ladder tournaments which can be
-used as the back end for a web or mobile games app.
+The idea is that Ascendancy will be an [REST](http://en.wikipedia.org/wiki/Representational_state_transfer "Representational State Transfer - Wikipedia") service over which all the necessary [CRUD](http://en.wikipedia.org/wiki/Create,_read,_update_and_delete "Create, read, update and delete - Wikipedia") for
+a chess club can be carried out, such as managing teams, games, competitions and players.
 
-The API should be agnostic to the type of game being played, being concerned only with the players, results, and lifecycle 
-of the tournament. I hope that the API will support a number of different ranking mechanisms such as swapping places when 
-a challenger wins, or using points-based systems like Elo ratings.
 
 Getting started
 ---------------
@@ -42,77 +41,152 @@ Navigate to the project's directory:
     
 Install Flask from pip:
 
-    pip install Flask
+    bin/pip install Flask
+
+Install nose and mock for testing:
+
+    bin/pip install nose mock
+
+Install MySQLdb:
+
+    bin/pip install MySQL-python
     
 You should now be able to fire up the app on localhost:
 
-    python ascendancy_app.py
-    
+    bin/python app.py
+
 You should be able to find the app at http://127.0.0.1:5000, if not you might need to [consult the Flask docs](http://flask.pocoo.org/docs/installation/#installation "Flask documentation").
 
-Operations
-----------
+You should also be able to run the tests (which should all pass):
 
-Draft API operations, based on the system's resources being limited to Ladders, Challenges, and Competitors.
+    bin/nosetests
 
-    /ladders                       [GET,POST]
-    /ladders/<ladder_id>           [GET,PUT,DELETE]
-    /challenges                    [GET,POST]
-    /challenges/<challenge_id>     [GET,PUT,DELETE]
-    /competitors                   [GET,POST]
-    /competitors/<competitor_id>   [GET,PUT,DELETE]
+Interface
+---------
+
+Draft routes:
+
+    /clubs                          [GET,POST]
+    /clubs/<club_id>                [GET,PUT,DELETE]
+    /teams                          [GET,POST]
+    /teams/<team_id>                [GET,PUT,DELETE]
+    /competitions                   [GET,POST]
+    /competitions/<competition_id>  [GET,PUT,DELETE]
+    /fixtures                       [GET,POST]
+    /fixtures/<fixture_id>          [GET,PUT,DELETE]
+    /games                          [GET,POST]
+    /games/<game_id>                [GET,PUT,DELETE]
+    /players                        [GET,POST]
+    /players/<player_id>            [GET,PUT,DELETE]
 
 Resources
 ---------
 
-### Ladder
+Draft resource models:
+
+### Club
 
     {
-        'ladder': {
-            'id': <ladder_id>,
-            'competitors': {
-                <rank> : <simplified_competitor_object>
-            },
-            'settings': {
-                'challenges_can_be_declined': true|false,
+        'club': {
+            'id': int,
+            'name': string,
+            'teams': [
+                ...
+            ]
+        }
+    }
+
+### Team
+
+    {
+        'team': {
+            'id': int,
+            'club': {
                 ...
             },
-            'created': <date>,
-            'expires': <date>,
-            ...
-        }
-    }
-
-### Challenge
-
-    {
-        'challenge': {
-            'id': <challenge_id>,
-            'ladder': <ladder_id>,
-            'challenger': <simplified_competitor_object>,
-            'challengee': <simplified_competitor_object>,
-            'status': ('pending'|'accepted'|'declined'),
-            'outcome': ('win'|'lose'|'draw'|'forfeit'|'no result'),
-            'expires': <date>,
-            'created': <date>,
-            ...
-        }
-    }
-
-### Competitor
-
-    {
-        'competitor': {
-            'id': <competitor_id>,
-            'ladders': [
-                {
-                    'id': <ladder_id>,
-                    'rank': <ladder_rank>,
-                    'rating': <ladder_rating>,
-                    ...
-                }
+            'competitions': [
+                ...
             ],
-            ...
+            'fixtures': [
+                ...
+            ]
+        }
+    }
+
+### Competition
+
+    {
+        'competition': {
+            'id': int,
+            'name': string,
+            'format': (league|tournament),
+            'num_rounds': int,
+            'time_control': {
+                'methodology': (rapidplay|matchplay...),
+                'initial_time': int,
+                'increment_time': int,
+                'num_time_periods': int
+            },
+            'grade_requirement': {
+                'value': int,
+                'operator': (gt|lt)
+            },
+            'teams': [  // optional
+                ...
+            ],
+            'games': [
+                ...
+            ]
+        }
+    }
+
+### Fixture
+
+    {
+        'fixture': {
+            'id': id,
+            'date': UTC date,
+            'vanue': string,
+            'competition': {
+                ...
+            },
+            'teams': {
+                ...
+            },
+            'games': {
+                ...
+            }
+        }
+    }
+
+### Game
+
+    {
+        'game': {
+            'id': int,
+            'player_1': {
+                ...
+            },
+            'player_2': {
+                ...
+            },
+            'white_player': int, // id of player_1 or _2
+            'result': (white|black|draw)
+        }
+    }
+
+### Player
+
+    {
+        'player': {
+            'id': int,
+            'ecf_code': string,
+            'ecf_member_code': string,
+            'first_name': string,
+            'surname': string,
+            'grades': {
+                ...
+            }
         }
     }
 
